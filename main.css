@@ -1,0 +1,20 @@
+
+.inline-block {
+    display: inline-block;
+}
+
+
+/* Video List */
+.video-list-panel .video-thumb {
+    height: 40px;
+}
+
+
+/* Video Details */
+.video-details-panel .region {
+    vertical-align: top;
+    margin-right: 20px;
+}
+.video-details-panel .region .row {
+    margin: 5px 5px;
+}
