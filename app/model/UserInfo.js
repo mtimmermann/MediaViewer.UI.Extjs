@@ -29,5 +29,16 @@ Ext.define('App.model.UserInfo', {
     reset: function() {
         this.data = {};
         this.isLoggedIn = false;
+    },
+
+    isUserInRole: function(roles) {
+        for (var i=0; i<roles.length; i++) {
+            //if (Ext.Array.contains(this.getRoles(), roles[i])) {
+            if (Ext.Array.contains(this.data.roles, roles[i])) {
+                return true;
+            }
+        }
+        return false;;
     }
+
 });

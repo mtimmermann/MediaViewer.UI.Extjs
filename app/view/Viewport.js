@@ -14,6 +14,7 @@ Ext.define('App.view.Viewport', {
         xtype: 'toolbar',
         region: 'north',
         itemId: 'main-nav-toolbar',
+        id: 'main-nav-toolbar',
         defaults: {
             scale: 'large',
             padding: '0 20',
@@ -48,6 +49,12 @@ Ext.define('App.view.Viewport', {
             id: 'navbar-login'
             //hidden: isLoggedIn
         });
+        this.items[0].items.push({
+            text: 'Admin',
+            itemId: 'admin',
+            id: 'navbar-admin'
+            //hidden: isLoggedIn
+        });
         Ext.apply(this, {items: this.items});
 
         this.callParent(arguments);
@@ -57,15 +64,26 @@ Ext.define('App.view.Viewport', {
     updateNavToolbar: function() {
         var isLoggedIn = App.settings.userInfo.isLoggedIn || false,
             login = Ext.getCmp('navbar-login'),
-            logout = Ext.getCmp('navbar-logout');
+            logout = Ext.getCmp('navbar-logout'),
+            admin = Ext.getCmp('navbar-admin');
         if (isLoggedIn) {
             login.getEl().hide();
             logout.getEl().show();
+            if (App.settings.userInfo.isUserInRole(['super-admin'])) {
+                admin.getEl().show();
+            } else {
+                admin.getEl().hide();
+            }
         } else {
             logout.getEl().hide();
             login.getEl().show();
+            admin.getEl().hide();
         }
-        //this.doLayout();
+        var toolbar = Ext.getCmp('main-nav-toolbar');
+        // TODO: Determine why doLayout occasionally throws exception.
+        try {
+            toolbar.doLayout();
+        } catch (e) {}
     }
 
     // _afterInitComponent: function() {
